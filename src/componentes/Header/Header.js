@@ -37,10 +37,14 @@ class Header extends Component {
                                 }>Formulario</NavLink>
                             </li>
                             <li>
-                                <a href="#">Pagina 1</a>
+                               <NavLink to="/pagina1" className={isActive =>
+                                    "active" + (!isActive ? " unselected" : "")
+                                }>Pagina 1</NavLink>
                             </li>
                             <li>
-                                <a href="#">Pagina 2</a>
+                            <NavLink to="/pagina2" className={isActive =>
+                                    "active" + (!isActive ? " unselected" : "")
+                                }>Pagina 2</NavLink>
                             </li>
                         </ul>
                     </nav>
