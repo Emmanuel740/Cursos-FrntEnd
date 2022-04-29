@@ -3,74 +3,85 @@ import { UserContext } from "../Context/user";
 
 export const FormularioHook = () => {
     const usuarioContext = useContext(UserContext);
+    const { User, actualizarUsuario } = useContext(UserContext);
 
-    const [user, setUser] = useState({});
-    const nombre = useRef(null);
-    const apellidos = useRef(null);
-    const bio = useRef(null);
-    const genero = useRef(null);
+
+    const [nombre, setNombre] = useState(User.nombre)
+    const [apellidos, setApellidos] = useState(User.apellidos)
+    const [bio, setBio] = useState(User.bio)
+    const [genero, setGenero] = useState(User.genero)
+
+    const [Usuario, setUsuario] = useState()
 
     useEffect(() => {
-        console.log(user)
-        console.log(usuarioContext)
-    
-    }, [user]);
+        console.log(nombre)
+    }, [nombre]);
+
     const recibirFormulario = (e) => {
         e.preventDefault();
-        console.log('submit')
-        console.log(nombre.current.value)
-        console.log(apellidos.current.value)
-        console.log(genero.current.value)
-        console.log(bio.current.value)
-        var user = {
-            nombre: nombre.current.value,
-            apellidos: apellidos.current.value,
-            bio: bio.current.value,
-            genero: genero.current.value
-        }        
-        setUser(user)
-        usuarioContext.setUser(user)}
-
-    const cambiaNombre = (e) =>{
-     e.preventDefault();
-        let newUser = {...user,nombre: nombre.current.value}
-        setUser(newUser);
-        console.log('change')
-
-        usuarioContext.setUser(newUser)
-
+        console.log(Usuario)
+        var usuario = {
+            nombre: nombre,
+            apellidos: apellidos,
+            bio: bio,
+            genero: genero
+        }
+        actualizarUsuario(usuario)
     }
+
+    const actualizarUser = (e) =>{
+        setUsuario({
+            ...Usuario,
+            [e.target.name] : e.target.value
+        })
+    }
+    const actualizarNombre = (e) =>{
+        setNombre(e.target.value)
+    }
+    const actualizarApellidos = (e) =>{
+        setApellidos(e.target.value)
+    }
+    const actualizarBio = (e) =>{
+        setBio(e.target.value)
+    }
+    const actualizarGenero = (e) =>{
+        setGenero(e.target.value)
+    }
+    
 
     return (
         <div>
             <div>
-               {
-                    user.nombre?
-                    <p>Nombre {nombre.current.value}</p>
-                    :<p>Sin nombre</p>
-                }
                 {
-                    usuarioContext.user.nombre?
-                    <p>Nombre {usuarioContext.user.nombre}</p>
-                    :<p>Sin nombre</p>
+                    User ?
+                        <div>
+                            <p>Nombre: {User.nombre}</p>
+                            <p>Apellidos: {User.apellidos}</p>
+                            <p>Descripcion: {User.bio}</p>
+                            <p>Genero: {User.genero}</p>
+                        </div>
+
+                        : <p>Sin usuario</p>
                 }
+                
             </div>
             <form className="mid-form" onSubmit={recibirFormulario}>
                 <div className="form-group">
                     <label htmlFor="nombre">Nombre</label>
-                    <input type="text" name="nombre" ref={nombre}  onChange={cambiaNombre}/>
+                    <input type="text" name="nombre" value={nombre} onChange={actualizarNombre} />
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="apellidos">Apellidos</label>
-                    <input type="text" name="apellidos" ref={apellidos} />
+                    <input type="text" name="apellidos" value={apellidos} onChange={actualizarApellidos}/>
                 </div>
 
                 <div className="form-group">
                     <label htmlFor="bio">Biografia</label>
-                    <textarea name="bio" ref={bio}></textarea>
+                    <textarea name="bio" value={bio} onChange={actualizarBio}></textarea>
                 </div>
-                <select className="form-group" ref={genero}>
+                <select className="form-group" name="genero" value={genero} onChange={actualizarGenero}>
+                    <option value="">Elige una opcion</option>
                     <option value="hombre">Hombre</option>
                     <option value="mujer">Mujer</option>
                     <option value="otro">Otro</option>

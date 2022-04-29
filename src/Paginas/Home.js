@@ -5,7 +5,8 @@ import Footer from "../componentes/footer/footer";
 import { UserContext } from "../Context/user";
 
 export const Home = () => {
-       const user = useContext(UserContext);
+    //    const userContext = useContext(UserContext);
+    const {User, actualizarUsuario} = useContext(UserContext);
 
         return (
             <div>
@@ -17,9 +18,14 @@ export const Home = () => {
                 <div className="center">
                     <div id="content">
                         {
-                            UserContext.nombre ?
-                            <p>Nombre: {UserContext.nombre}</p>
-                            :<p>Sin nombre</p>
+                            User ?
+                            <div>
+                            <p>Nombre: {User.nombre}</p>
+                            <p>Apellidos: {User.apellidos}</p>
+                            <p>Descripcion: {User.bio}</p>
+                            <p>Genero: {User.genero}</p>
+                            </div>
+                            :<p>Sin usuario</p>
                         }
                     </div>
                     <Sidebar />

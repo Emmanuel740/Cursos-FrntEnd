@@ -1,11 +1,11 @@
 import Context from "../../Context/contexto";
 import { useContext } from "react";
-export const ComponentPrueba = () => {
+export const ComponentPruebaDos = () => {
     const {Count, handleCount} = useContext(Context);
-  
+    
     return (
       <div>
-        <h1>Componente 1</h1>
+        <h1>Componente 2</h1>
         <button
           type="button"
           onClick={() => handleCount('suma')}
