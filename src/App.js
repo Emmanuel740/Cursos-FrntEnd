@@ -26,10 +26,10 @@ export const App = () => {
         <Router />
         {/* {User? <Router />: <Login/>} */}
       </UserProvider>
-      <ContextProvider>
+      {/* <ContextProvider>
         <ComponentPrueba />
         <ComponentPruebaDos />
-      </ContextProvider>
+      </ContextProvider> */}
 
     </React.Fragment>
 
