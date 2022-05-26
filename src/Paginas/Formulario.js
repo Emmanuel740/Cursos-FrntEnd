@@ -51,7 +51,7 @@ export default class Formulario extends Component{
                 />
                 <div className="center">
                     <div id="content">
-                        <h1 className="subHeader">Formulario</h1>
+                        <h1 className="subHeader">Agregar un canpos</h1>
                         {
                             user.nombre &&
                                 <p>{user.nombre}</p>
