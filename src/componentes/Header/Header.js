@@ -1,9 +1,40 @@
 import React, { Component } from "react";
 import logo from '../../assets/images/react.svg'
 import { NavLink } from 'react-router-dom';
-
+import store from "../../Redux/store";
+import { LOGEAR } from "../../Redux/Types";
+import LoginButton from "./LoginButton";
 class Header extends Component {
+    
+    constructor(props){
+        super(props)
+        this.state = {
+            usuario: false
+        }
+    }
+    
+
+    componentDidMount() {
+        console.log(this.props);
+        store.subscribe(() =>{
+            this.setState({
+                usuario: store.getState().usuario
+            })
+        })
+    }
+    componentDidUpdate(){
+        console.log(this.state)
+    }
+    handleLogin(){
+
+        // this.setState({
+        //     usuario: !this.state.usuario
+        // })
+        store.dispatch({ type: LOGEAR})
+
+    }
     render() {
+        
         return (
             <header id="header">
                 <div className="center">
@@ -45,6 +76,22 @@ class Header extends Component {
                             <NavLink to="/pagina2" className={isActive =>
                                     "active" + (!isActive ? " unselected" : "")
                                 }>Pagina 2</NavLink>
+                            </li>
+                            <li>
+                            <NavLink to="/login" className={isActive =>
+                                    "active" + (!isActive ? " unselected" : "")
+                                }>Login</NavLink>
+                            </li>
+                            <li>
+                                
+                            {/* <button className="btn btn-success" onClick={() => this.handleLogin()} >
+                                Logear
+                            </button> */}
+                            <LoginButton />
+                            
+                            </li>
+                            <li>
+                            {this.state.usuario}
                             </li>
                         </ul>
                     </nav>

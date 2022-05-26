@@ -14,7 +14,9 @@ import Router from './Router';
 import { ComponentPrueba } from './componentes/Component/Component';
 import { ComponentPruebaDos } from './componentes/Component/Components2';
 import { Login } from './Paginas/Login';
-
+//Store de Redux
+import { Provider } from 'react-redux';
+import store from './Redux/store';
 export const App = () => {
   // const { User } = useContext(UserContext);
   // const {User, actualizarUsuario} = useContext(UserContext);
@@ -22,14 +24,14 @@ export const App = () => {
   return (
     <React.Fragment>
 
-      <UserProvider>
+      <Provider store={store}>
         <Router />
         {/* {User? <Router />: <Login/>} */}
-      </UserProvider>
-      <ContextProvider>
+      </Provider>
+      {/* <ContextProvider>
         <ComponentPrueba />
         <ComponentPruebaDos />
-      </ContextProvider>
+      </ContextProvider> */}
 
     </React.Fragment>
 
