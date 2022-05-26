@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Peliculas from "./componentes/Peliculas.js/Peliculas";
 import Pruebas from './componentes/Pruebas/Pruebas'
@@ -15,29 +15,31 @@ import { Login } from './Paginas/Login'
 import ProtectedRoute from "./componentes/ProtectedRoute";
 //Importar el store de Redux
 import store from "./Redux/store";
-// const {Home} = lazy(() => import('./Paginas/Home'));
-// const Blog = lazy(() => import('./componentes/blog/blog'));
-let user = true;
-class Router extends Component {
-    constructor(props){
-        super(props);
-        this.setState = {
-            usuario: false
-        }
-    }
-    componentDidMount(){
+import { useSelector } from 'react-redux';
+let user = false;
+// class Router extends Component {
+const Router = () =>{
+    const state = useSelector(state => state)
+    useEffect(() =>{
+        console.log(state)
+    }, [state])
+    // constructor(props){
+    //     super(props);
+    //     this.setState = {
+    //         usuario: false
+    //     }
+    // }
+    // componentDidMount(){
         
-        store.subscribe(() =>{
-            this.setState({
-                usuario: store.getState().usuario
-            })
-        })
-    }
-    componentDidUpdate(){
-        console.log(this.state)
-    }
+    //     store.subscribe(() =>{
+    //         user = store.getState().usuario
+    //     })
+    // }
+    // componentDidUpdate(){
+    //     console.log(this.state)
+    // }
     
-    render() {
+    // render() {
         return (
             <BrowserRouter>
                 {/* Configurar rutas y paginas */}
@@ -53,7 +55,7 @@ class Router extends Component {
                     <Route
                         path="/"
                         element={
-                            <ProtectedRoute user={store.getState().usuario}>
+                            <ProtectedRoute user={state.usuario}>
                                 <Home />
                             </ProtectedRoute>
                         }
@@ -75,6 +77,6 @@ class Router extends Component {
 
             </BrowserRouter>
         );
-    }
+    // }
 }
 export default Router;

@@ -3,17 +3,19 @@ import logo from '../../assets/images/react.svg'
 import { NavLink } from 'react-router-dom';
 import store from "../../Redux/store";
 import { LOGEAR } from "../../Redux/Types";
-
+import LoginButton from "./LoginButton";
 class Header extends Component {
     
     constructor(props){
         super(props)
         this.state = {
-            usuario: true
+            usuario: false
         }
     }
+    
+
     componentDidMount() {
-        console.log(this.state);
+        console.log(this.props);
         store.subscribe(() =>{
             this.setState({
                 usuario: store.getState().usuario
@@ -32,6 +34,7 @@ class Header extends Component {
 
     }
     render() {
+        
         return (
             <header id="header">
                 <div className="center">
@@ -75,9 +78,16 @@ class Header extends Component {
                                 }>Pagina 2</NavLink>
                             </li>
                             <li>
-                            <button className="btn btn-success" onClick={() => this.handleLogin()} >
+                            <NavLink to="/login" className={isActive =>
+                                    "active" + (!isActive ? " unselected" : "")
+                                }>Login</NavLink>
+                            </li>
+                            <li>
+                                
+                            {/* <button className="btn btn-success" onClick={() => this.handleLogin()} >
                                 Logear
-                            </button>
+                            </button> */}
+                            <LoginButton />
                             
                             </li>
                             <li>
