@@ -6,7 +6,6 @@ import Error from "./componentes/Error/error";
 import PruebasParams from './componentes/PruebasParams/Pruebas'
 import Header from "./componentes/Header/Header";
 import Formulario from "./Paginas/Formulario";
-// import { Paginauno } from "./componentes/pagina1/pagina";
 import { FormularioHook } from "./Paginas/FormularioHooks";
 import { Home } from './Paginas/Home'
 import Blog from './componentes/blog/blog'
@@ -16,67 +15,87 @@ import ProtectedRoute from "./componentes/ProtectedRoute";
 //Importar el store de Redux
 import store from "./Redux/store";
 import { useSelector } from 'react-redux';
-let user = false;
-// class Router extends Component {
-const Router = () =>{
+//lazy loading Ejemplo
+import Layout from "./LazyLoading/Layout";
+import { FormularioHookRedux } from "./Paginas/FormularioHooksRedux";
+const About = React.lazy(() => import("./LazyLoading/About"));
+const Dashboard = React.lazy(() => import("./LazyLoading/Dashboard/Dashboard"))
+
+const Router = () => {
     const state = useSelector(state => state)
-    useEffect(() =>{
+    useEffect(() => {
         console.log(state)
     }, [state])
-    // constructor(props){
-    //     super(props);
-    //     this.setState = {
-    //         usuario: false
-    //     }
-    // }
-    // componentDidMount(){
-        
-    //     store.subscribe(() =>{
-    //         user = store.getState().usuario
-    //     })
-    // }
-    // componentDidUpdate(){
-    //     console.log(this.state)
-    // }
-    
-    // render() {
-        return (
-            <BrowserRouter>
-                {/* Configurar rutas y paginas */}
-                <Header />
 
-                <Routes>
-                    {/* <Route exact path="/" element={<Peliculas />}></Route>
+    return (
+        <BrowserRouter>
+            {/* Configurar rutas y paginas */}
+            <Header />
+
+            <Routes>
+                {/* <Route exact path="/" element={<Peliculas />}></Route>
                         <Route path="/prueba" element={<Pruebas />}></Route>
                         <Route path="/blog" element={<Blog/>}></Route>
                         <Route path="/pruebas" element={<PruebasParams />}></Route>
                         <Route path="/*" element={<Error />} /> */}
-                    {/* <Route exact path="/" element={<Home />}></Route> */}
-                    <Route
+
+                {/* Parte de RUTAS PROTEGIDAS para Autenticacion */}
+                {/* <Route
                         path="/"
                         element={
                             <ProtectedRoute user={state.usuario}>
                                 <Home />
                             </ProtectedRoute>
                         }
+                        6546975215
+                    /> */}
+                <Route path="/" element={<Layout />}>
+                    <Route index element={
+                        <ProtectedRoute user={state.usuario}>
+                            <Home />
+                        </ProtectedRoute>
+                    } />
+                    <Route
+                        path="about"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                <ProtectedRoute user={state.usuario}>
+                                    <About />
+                                </ProtectedRoute>
+                            </React.Suspense>
+                        }
                     />
-                    <Route path="/login" element={<Login />} /> 
+                    <Route
+                        path="dashboard/*"
+                        element={
+                            <React.Suspense fallback={<>...</>}>
+                                <ProtectedRoute user={state.usuario}>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            </React.Suspense>
+                        }
+                    />
+                    {/* <Route path="*" element={<NoMatch />} /> */}
+                </Route>
 
-                    <Route path="/prueba" element={<Blog />}></Route>
-                    <Route path="/blog" element={<Blog />}></Route>
-                    <Route path="/pruebas" element={<PruebasParams />}></Route>
-                    <Route path="/*" element={<Error />} />
-                    <Route path="/formulario" element={<Formulario />} />
-                    {/* <Route path="/pagina1" element={<Paginauno/>}/> */}
-                    <Route path="/pagina2" element={<FormularioHook />} />
+                {/* <Route exact path="/" element={<Home />}></Route> */}
+                <Route path="/login" element={<Login />} />
+                <Route path="/prueba" element={<Blog />}></Route>
+                <Route path="/blog" element={<Blog />}></Route>
+                <Route path="/pruebas" element={<PruebasParams />}></Route>
+                <Route path="/*" element={<Error />} />
+                <Route path="/formulario" element={<Formulario />} />
+                {/* <Route path="/pagina1" element={<Paginauno/>}/> */}
+                {/* <Route path="/pagina2" element={<FormularioHook />} /> */}
+                <Route path="/pagina2" element={<FormularioHookRedux />} />
 
 
 
-                </Routes>
+
+            </Routes>
 
 
-            </BrowserRouter>
-        );
-    // }
+        </BrowserRouter>
+    );
 }
 export default Router;

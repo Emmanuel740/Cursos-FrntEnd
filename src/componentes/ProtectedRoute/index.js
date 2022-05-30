@@ -1,15 +1,12 @@
 import { Navigate } from "react-router-dom";
 
 const ProtectedRoute = ({ user, children }) => {
-
-    if (!user) {
-        console.log(user)
-      return <Navigate to="/login" replace />;
-    }else{
-        console.log(user)
+    console.log(user)
+    if (!user.logeado) 
+      return <Navigate to="/pagina2" replace />;
+    else
       return children;
-
-    }
+    
   
   };
 

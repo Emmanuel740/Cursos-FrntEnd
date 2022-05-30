@@ -9,13 +9,12 @@ class Header extends Component {
     constructor(props){
         super(props)
         this.state = {
-            usuario: false
+            usuario: {}
         }
     }
     
 
     componentDidMount() {
-        console.log(this.props);
         store.subscribe(() =>{
             this.setState({
                 usuario: store.getState().usuario
@@ -30,6 +29,7 @@ class Header extends Component {
         // this.setState({
         //     usuario: !this.state.usuario
         // })
+
         store.dispatch({ type: LOGEAR})
 
     }
@@ -87,11 +87,11 @@ class Header extends Component {
                             {/* <button className="btn btn-success" onClick={() => this.handleLogin()} >
                                 Logear
                             </button> */}
-                            <LoginButton />
+                            <LoginButton  logeado={this.state.usuario.logeado}/>
                             
                             </li>
                             <li>
-                            {this.state.usuario}
+                            {this.state.usuario.logeado}
                             </li>
                         </ul>
                     </nav>
